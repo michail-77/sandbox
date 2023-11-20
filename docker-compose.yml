@@ -41,6 +41,19 @@ services:
     depends_on:
       - influxdb
 
+  telegraf:
+    image: telegraf:1.4.0
+    privileged: true
+    volumes:
+      - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:Z
+      - /var/run/docker.sock:/var/run/docker.sock:Z
+    links:
+      - influxdb
+    ports:
+      - "8092:8092/udp"
+      - "8094:8094"
+      - "8125:8125/udp"      
+
   kapacitor:
   # Full tag list: https://hub.docker.com/r/library/kapacitor/tags/
     build:
@@ -91,3 +104,4 @@ services:
       context: ./documentation
     ports:
       - "3010:3000"
+

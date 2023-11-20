@@ -27,22 +27,18 @@ services:
       dockerfile: ./${TYPE}/Dockerfile
       args:
         TELEGRAF_TAG: ${TELEGRAF_TAG}
-    image: "telegraf"
+#    image: "telegraf"
+    image: telegraf:1.4.0
     environment:
       HOSTNAME: "telegraf-getting-started"
     # Telegraf requires network access to InfluxDB
-    links:
-      - influxdb
-    volumes:
-      # Mount for telegraf configuration
-      - ./telegraf/:/etc/telegraf/
-      # Mount for Docker API access
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - influxdb
-
-  telegraf:
-    image: telegraf:1.4.0
+    #  links:
+    #    - influxdb
+    # volumes:
+    #   # Mount for telegraf configuration
+    #   - ./telegraf/:/etc/telegraf/
+    #   # Mount for Docker API access
+    #   - /var/run/docker.sock:/var/run/docker.sock
     privileged: true
     volumes:
       - ./etc/telegraf.conf:/etc/telegraf/telegraf.conf:Z
@@ -52,7 +48,10 @@ services:
     ports:
       - "8092:8092/udp"
       - "8094:8094"
-      - "8125:8125/udp"      
+      - "8125:8125/udp"
+
+    depends_on:
+      - influxdb
 
   kapacitor:
   # Full tag list: https://hub.docker.com/r/library/kapacitor/tags/

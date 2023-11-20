@@ -29,7 +29,7 @@ services:
         TELEGRAF_TAG: ${TELEGRAF_TAG}
     image: "telegraf"
     privileged: true
-    user: telegraf:998
+    user: telegraf:993
     environment:
       HOSTNAME: "telegraf-getting-started"
     # Telegraf requires network access to InfluxDB

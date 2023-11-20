@@ -20,7 +20,7 @@ services:
       # UDP Port
       - "8089:8089/udp"
 
-telegraf:
+  telegraf:
     # Full tag list: https://hub.docker.com/r/library/telegraf/tags/
     build:
       context: ./images/telegraf/
